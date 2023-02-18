@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}
+Лента подписки
+{% endblock %}
+{% block content %}
+  <div class="container py-5">
+    <h1>Лента подписки</h1>
+    {% include 'posts/includes/switcher.html' %}
+    {% for post in page_obj %}
+    {% include 'posts/includes/for_post_in_posts.html' with author_username=post.author.username %}
+    {% endfor %}
+    {% include 'posts/includes/paginator.html' %}
+  </div>
+{% endblock %}

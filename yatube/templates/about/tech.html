@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Технологии{% endblock %}
+{% block content %}
+<div class="container py-3">
+<div class="row">
+  <h1>Вот что я умею</h1>
+  <aside class="col-12 col-md-3">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        Python
+      </li>
+      <img src="{% static 'img/Питон логотип.png' %}" width="230" height="180" class="d-inline-block align-top" alt="">
+      <li class="list-group-item">
+        Django
+      </li>
+      <img src="{% static 'img/Django_logo.png' %}" width="230" height="180" class="d-inline-block align-top" alt="">
+    </ul>
+  </aside>
+  <article class="col-12 col-md-6">
+    <p>Python.Это популярный язык программирования, он хорош для начинающих разработчиков 
+      и применяется во многих сферах — от машинного обучения до создания игр и
+      проведения научных исследований.Простой синтаксис значительно облегчает 
+      написание и анализ кода.<br>
+      Django считается лучшим веб-фреймворком, написанным на Python. Этот инструмент 
+      удобно использовать для разработки сайтов, работающих с базами данных.
+      Фреймворк позволяет создавать сайт из компонентов.
+      Это можно сравнить со строительством крепости с помощью Lego.<br>
+      SQLite это быстрая и легкая встраиваемая однофайловая СУБД на языке C, 
+      которая не имеет сервера и позволяет хранить всю базу локально на одном устройстве. 
+      Создатели SQLite пользуются принципом «минимального полного набора». 
+      Из всех возможностей SQL в ней есть наиболее нужные.<br>
+      Git и GitHub.Git — это инструмент, позволяющий реализовать распределённую 
+      систему контроля версий, а GitHub — это сервис для проектов, использующих Git.
+    </p>
+  </article>
+  <aside class="col-12 col-md-3">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        SQLite
+      </li>
+      <img src="{% static 'img/SQL_logo.png' %}" width="350" height="180" class="d-inline-block align-top" alt="">
+      <li class="list-group-item">
+        Git и GitHub
+      </li>
+      <img src="{% static 'img/GitHub-Logo.png' %}" width="350" height="180" class="d-inline-block align-top" alt="">
+    </ul>
+  </aside>
+</div>
+</div>
+{% endblock %}
