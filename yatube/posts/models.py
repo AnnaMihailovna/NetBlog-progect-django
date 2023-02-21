@@ -33,7 +33,7 @@ class Post(CreatedModel):
 class Group(models.Model):
     title = models.CharField(verbose_name='Заголовок',
                              max_length=200,)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, db_index=True)
     description = models.TextField(verbose_name='Описание группы',
                                    help_text='Краткое описание группы',)
 
@@ -53,6 +53,10 @@ class Comment(CreatedModel):
 
 class Follow(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,
-                             related_name="follower")
+                             related_name='follower')
     author = models.ForeignKey(User, on_delete=models.CASCADE,
-                               related_name="following")
+                               related_name='following')
+
+    class Meta:
+        constraints = [models.UniqueConstraint(
+            fields=['user', 'author'], name='unique_user_author')]

@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views.decorators.cache import cache_page
 
 from .forms import CommentForm, PostForm
-from .models import Comment, Follow, Group, Post
+from .models import Follow, Group, Post
 
 User = get_user_model()
 
@@ -41,27 +41,24 @@ def group_posts(request, slug):
 
 
 def profile(request, username):
-    author = get_object_or_404(
-        User.objects.prefetch_related('posts'), username=username)
+    author = get_object_or_404(User, username=username)
+    user = request.user
     page_obj = get_page(request, author.posts.all())
-    if request.user.is_authenticated:
-        following = Follow.objects.filter(
-            user=request.user, author=author
-        ).exists()
-    else:
-        following = False
+    is_following = user.is_authenticated and user.follower.filter(
+        author=author).exists()
     context = {
         'author': author,
         'page_obj': page_obj,
-        'following': following,
+        'following': is_following,
     }
     return render(request, 'posts/profile.html', context)
 
 
 def post_detail(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(
+        Post.objects.select_related('author', 'group'), id=post_id)
     form = CommentForm()
-    comments = Comment.objects.filter(post=post_id)
+    comments = post.comments.select_related('author')
     context = {
         'post': post,
         'form': form,
@@ -72,22 +69,14 @@ def post_detail(request, post_id):
 
 @login_required
 def post_create(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST or None,
-                        files=request.FILES or None)
-        if form.is_valid():
-            post = form.save(False)
-            post.author = request.user
-            post.save()
-            return redirect('posts:profile', username=request.user)
+    form = PostForm(request.POST or None,
+                    files=request.FILES or None)
+    if not form.is_valid():
         return render(request, 'posts/create_post.html', {'form': form})
-    form = PostForm()
-    groups = Group.objects.all()
-    context = {
-        'form': form,
-        'groups': groups,
-    }
-    return render(request, 'posts/create_post.html', context)
+    post = form.save(commit=False)
+    post.author = request.user
+    post.save()
+    return redirect('posts:profile', username=request.user)
 
 
 @login_required
@@ -153,7 +142,6 @@ def profile_unfollow(request, username):
     user = request.user
     author = get_object_or_404(User, username=username)
     is_follower = Follow.objects.filter(user=user, author=author)
-    if is_follower.exists():
-        is_follower.delete()
+    is_follower.delete()
     return redirect(reverse('posts:profile',
                     kwargs={'username': author}))
