@@ -30,6 +30,11 @@ python manage.py createsuperuser
   * Запустить проект:
 ```
 python manage.py runserver
-```  
+```
+### Развёрнутый проект:
+https://netblog.pythonanywhere.com/
+
+https://netblog.pythonanywhere.com/admin/
+
 ### Автор  
 [AnnaMihailovna](https://github.com/AnnaMihailovna/)
