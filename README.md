@@ -31,10 +31,15 @@ python manage.py createsuperuser
 ```
 python manage.py runserver
 ```
+
 ### Развёрнутый проект:
 https://netblog.pythonanywhere.com/
 
 https://netblog.pythonanywhere.com/admin/
+
+Суперпользователь:
+Имя пользователя: admin
+Password: superuser
 
 ### Автор  
 [AnnaMihailovna](https://github.com/AnnaMihailovna/)
