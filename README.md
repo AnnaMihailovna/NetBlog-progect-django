@@ -33,6 +33,8 @@ python manage.py runserver
 ```
 
 ### Развёрнутый проект:
+(приостановлено)
+
 https://netblog.pythonanywhere.com/
 
 https://netblog.pythonanywhere.com/admin/
